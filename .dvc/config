@@ -1,0 +1,7 @@
+[core]
+    remote = storage
+['remote "storage"']
+    url = gdrive://1UgEUcsPg79rPyW9VyM2CrPc1sorwE6RE
+    gdrive_use_service_account = true
+    gdrive_service_account_json_file_path = c:/Users/thank/Desktop/dvc-strorage-6497-5cce2fb623a9.json
+    gdrive_acknowledge_abuse = true
