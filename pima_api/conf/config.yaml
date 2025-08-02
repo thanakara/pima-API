@@ -2,4 +2,5 @@ defaults:
   - hydra
   - _self_
 
+train_size: 700
 seed: 42

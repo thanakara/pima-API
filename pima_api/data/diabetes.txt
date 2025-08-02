@@ -1,0 +1,21 @@
+Based on a quick Google search we get the following:
+
++ The expected values for normal fasting blood glucose consentration are
+    between 70 - 100 mg/dL.
+
++A healthy diastolic blood pressure is less than 80 mm Hg. Once you start getting below 60, that makes people feel uncomfortable.
+
++In the study population, the average triceps skin fold thickness (TSF)
+    was 18.7 ± 8.5 mm. Women have much higher TSF thickness than men:
+        (23.6 ± 7.5 mm VS 14.3 ± 6.8 mm).
+
++ Using commercial assays, normal fasting insulin levels,
+    range between 5 - 15 μU/mL.
+
++ Body mass index (BMI) (kg/ m)2. Self explanatory.
+
+
+
+--- Getting zero as minimum value in the above attributes,
+        based on the dataset's creation protocol,
+            is the representation of missing values. ---
