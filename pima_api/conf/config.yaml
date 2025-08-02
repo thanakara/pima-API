@@ -1,5 +1,6 @@
 defaults:
   - hydra
+  - model: random_forest
   - _self_
 
 train_size: 700

@@ -1,7 +1,8 @@
 import hydra
-from constant import Filepath
-from data.preprocess import stratify_split_dataset
 from omegaconf import DictConfig, OmegaConf
+
+from pima_api.constant import Filepath
+from pima_api.model.job import fit_report_and_serialize
 
 
 @hydra.main(
@@ -11,10 +12,8 @@ from omegaconf import DictConfig, OmegaConf
 )
 def main(config: DictConfig) -> None:
     OmegaConf.resolve(config)
-    X_train, *_ = stratify_split_dataset(
-        datapath=Filepath.DATAPATH.value, train_size=config.train_size, seed=config.seed
-    )
-    print(X_train.shape)
+    rand_f = fit_report_and_serialize(config=config, artifacts=False)
+    print(rand_f.__class__)
 
 
 if __name__ == "__main__":

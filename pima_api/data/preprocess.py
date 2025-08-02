@@ -10,13 +10,13 @@ def preprocess_dataset(datapath: Path | str) -> pd.DataFrame:
     eq_zero_series = df.eq(0).any().drop(labels=["Pregnancies", "Outcome"])
     mask = eq_zero_series.tolist()
     cols = eq_zero_series[mask].index
-    df[cols] = df[cols].apply(lambda col_: col_.replace(0, col_.median))
+    df[cols] = df[cols].apply(lambda col_: col_.replace(0, col_.median()))
 
     return df
 
 
 def stratify_split_dataset(
-    datapath: Path | str, train_size: float | int, seed: int = 42
+    datapath: Path | str, train_size: int | float, seed: int = 42
 ) -> tuple[np.ndarray]:
     df_prep = preprocess_dataset(datapath)
     train_set, test_set = train_test_split(

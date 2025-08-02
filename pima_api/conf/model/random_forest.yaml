@@ -1,0 +1,10 @@
+# @package _global_
+
+n_estimators: 100
+criterion: gini
+max_depth: null
+min_sample_split: 2
+max_features: null
+oob_score: false
+n_jobs: -1
+class_weight: null
