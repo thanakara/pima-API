@@ -1,7 +1,10 @@
+import json
+
 import joblib
+import matplotlib.pyplot as plt
 from omegaconf import DictConfig
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report
+from sklearn.metrics import ConfusionMatrixDisplay, classification_report
 
 from pima_api.constant import Filepath
 from pima_api.data.preprocess import stratify_split_dataset
@@ -14,7 +17,7 @@ def fit_report_and_serialize(
         n_estimators=config.n_estimators,
         criterion=config.criterion,
         max_depth=config.max_depth,
-        min_samples_split=config.min_sample_split,
+        min_samples_split=config.min_samples_split,
         max_features=config.max_features,
         random_state=config.seed,
         oob_score=config.oob_score,
@@ -32,8 +35,14 @@ def fit_report_and_serialize(
         with open("random_forest.pkl", "wb") as f_:
             joblib.dump(rand_f, f_, protocol=4)
 
-        report = classification_report(y_test, Y_pred)
+        report_dict = classification_report(
+            y_test, Y_pred, target_names=["Negative", "Positive"], output_dict=True
+        )
         with open("report.json", "w") as f_:
-            f_.write(report)
+            f_.write(json.dumps(report_dict, indent=4))
+
+        ConfusionMatrixDisplay.from_predictions(y_test, Y_pred, cmap="Blues")
+        plt.savefig("confusion_matrix.png")
+        plt.close()
 
     return rand_f

@@ -1,10 +1,10 @@
 # @package _global_
 
-n_estimators: 100
-criterion: gini
-max_depth: null
-min_sample_split: 2
+n_estimators: 50
+criterion: entropy
+max_depth: 5
+min_samples_split: 4
 max_features: null
 oob_score: false
 n_jobs: -1
-class_weight: null
+class_weight: balanced
