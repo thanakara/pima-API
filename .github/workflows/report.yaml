@@ -26,8 +26,5 @@ jobs:
           echo "## Metrics" > report.md
           cat report.json >> report.md
 
-          echo "## Plots" >> report.md
-          echo '![](./confusion_matrix.png "Confusion Matrix")' >> report.md
-
           cml comment create report.md
           
