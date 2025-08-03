@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import joblib
 import matplotlib.pyplot as plt
@@ -28,7 +29,7 @@ def fit_report_and_serialize(config: DictConfig) -> RandomForestClassifier:
     )
     rand_f = rand_f.fit(X_train, y_train)
 
-    with open("model.pkl", "wb") as f_:
+    with Path.open(Filepath.MODELJOB.value, "wb") as f_:
         joblib.dump(rand_f, f_, protocol=4)
 
     return rand_f
