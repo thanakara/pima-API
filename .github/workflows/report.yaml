@@ -1,19 +1,21 @@
 name: CML
 
-
 on: [push]
 
 jobs:
   train-and-report:
     runs-on: ubuntu-latest
-    container: docker://ghcr.io/iterative/cml:0-dvc2-base1
+    container: 
+      image: ghcr.io/iterative/cml:0-dvc2-base1
+
     steps:
-      - name: cml_run
+      - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: CML Run
         run: |
           pip install --no-cache-dir -r requirements.txt
-          python pima_api
+          python pima_api.py
 
           echo "## CLASSIFICATION REPORT" > report.md
           cat report.json >> report.md
