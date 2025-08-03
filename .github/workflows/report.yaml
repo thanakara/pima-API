@@ -7,7 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     # container: docker://ghcr.io/iterative/cml:0-dvc2-base1
     steps:
-      - name: CHECKOUT
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
@@ -15,19 +14,18 @@ jobs:
       - uses: iterative/setup-cml@v1
       # - uses: iterative/setup-dvc@v1
 
-
-      - name: TRAIN
+      - name: Train
         run: |
           pip install --no-cache-dir -r requirements.txt
           python pima_api.py
 
-
-      - name: REPORT
+      - name: CML report
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "## Metrics" > report.md
           cat report.json >> report.md
+
           echo "## Plots" >> report.md
           echo '![](./confusion_matrix.png "Confusion Matrix")' >> report.md
 
