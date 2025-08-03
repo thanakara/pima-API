@@ -12,8 +12,8 @@ from pima_api.model.job import fit_report_and_serialize
 )
 def main(config: DictConfig) -> None:
     OmegaConf.resolve(config)
-    rand_f = fit_report_and_serialize(config=config, artifacts=True)
-    print(rand_f.__class__)
+    rand_f = fit_report_and_serialize(config=config)
+    print(rand_f.__class__.__name__)
 
 
 if __name__ == "__main__":

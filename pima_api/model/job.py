@@ -10,9 +10,7 @@ from pima_api.constant import Filepath
 from pima_api.data.preprocess import stratify_split_dataset
 
 
-def fit_report_and_serialize(
-    config: DictConfig, artifacts: bool = False
-) -> RandomForestClassifier:
+def fit_report_and_serialize(config: DictConfig) -> RandomForestClassifier:
     rand_f = RandomForestClassifier(
         n_estimators=config.n_estimators,
         criterion=config.criterion,
@@ -30,19 +28,7 @@ def fit_report_and_serialize(
     )
     rand_f = rand_f.fit(X_train, y_train)
 
-    if artifacts:
-        Y_pred = rand_f.predict(X_test)
-        with open("random_forest.pkl", "wb") as f_:
-            joblib.dump(rand_f, f_, protocol=4)
-
-        report_dict = classification_report(
-            y_test, Y_pred, target_names=["Negative", "Positive"], output_dict=True
-        )
-        with open("report.json", "w") as f_:
-            f_.write(json.dumps(report_dict, indent=4))
-
-        ConfusionMatrixDisplay.from_predictions(y_test, Y_pred, cmap="Blues")
-        plt.savefig("confusion_matrix.png")
-        plt.close()
+    with open("model.pkl", "wb") as f_:
+        joblib.dump(rand_f, f_, protocol=4)
 
     return rand_f
