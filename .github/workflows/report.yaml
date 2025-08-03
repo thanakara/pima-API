@@ -14,10 +14,10 @@ jobs:
       - uses: iterative/setup-cml@v1
       # - uses: iterative/setup-dvc@v1
 
-      - name: Train
-        run: |
-          pip install --no-cache-dir -r requirements.txt
-          python pima_api.py
+      # - name: Train
+      #   run: |
+      #     pip install --no-cache-dir -r requirements.txt
+      #     python pima_api
 
       - name: CML report
         env:
