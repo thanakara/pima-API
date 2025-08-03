@@ -1,0 +1,27 @@
+name: CML
+on: [push]
+jobs:
+  train-and-report:
+    runs-on: ubuntu-latest
+    container: docker://ghcr.io/iterative/cml:0-dvc2-base1
+    steps:
+      - uses: actions/checkout@v3
+      - name: cml_run
+
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: |
+      # +deps
+          pip install --no-cache-dir -r requirements.txt
+
+      # +build
+          python pima_api
+ 
+      # +report:
+          echo "## CLASSIFICATION REPORT" > report.md
+          cat report.json >> report.md
+          echo '![](./confusion_matrix.png "Confusion Matrix")' >> report.md
+
+          cml comment create report.md
+          
