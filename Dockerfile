@@ -34,5 +34,5 @@ RUN conda run --name pima-api uv run pima_api/model/produce.py
 
 # Run the FastAPI app using fastapi CLI:
 ENTRYPOINT ["conda", "run", "--name", "pima-api", "uv", "run"]
-CMD ["fastapi", "run", "pima_api/app.py", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["fastapi", "run", "pima_api/fastapi_pima.py", "--host", "0.0.0.0", "--port", "8080"]
 

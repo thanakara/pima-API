@@ -5,14 +5,20 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 
-def preprocess_dataset(datapath: Path | str) -> pd.DataFrame:
-    df = pd.read_csv(datapath)
-    eq_zero_series = df.eq(0).any().drop(labels=["Pregnancies", "Outcome"])
-    mask = eq_zero_series.tolist()
-    cols = eq_zero_series[mask].index
-    df[cols] = df[cols].apply(lambda col_: col_.replace(0, col_.median()))
+def preprocess_dataset(datapath: Path | str, xgb=False) -> pd.DataFrame:
+    pima = pd.read_csv(datapath)
+    columns = pima.columns.tolist()
+    cols_toreplace = [
+        col
+        for col in pima.columns
+        if pima[col].min() == 0 and col not in ("Pregnancies", "Outcome")
+    ]
+    pima[cols_toreplace] = pima[cols_toreplace].where(
+        pima[cols_toreplace].ne(0), np.nan
+    )
+    pima[cols_toreplace] = pima[cols_toreplace].apply(lambda s_: s_.fillna(s_.median()))
 
-    return df
+    return pima
 
 
 def stratify_split_dataset(

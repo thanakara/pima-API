@@ -1,11 +1,11 @@
 import logging
+import time
 
 import hydra
-import pandas as pd
 from omegaconf import DictConfig, OmegaConf
 
 from pima_api.constant import Filepath
-from pima_api.model.job import fit_report_and_serialize
+from pima_api.model.job import randf_fit_report_and_serialize
 
 log = logging.getLogger(__name__)
 
@@ -17,10 +17,9 @@ log = logging.getLogger(__name__)
 )
 def run(config: DictConfig) -> None:
     OmegaConf.resolve(config)
-    rand_f = fit_report_and_serialize(config=config)
-    params = rand_f.get_params()
-    log.info("@_Serialize job")
-    log.info(pd.DataFrame(params.values(), index=params.keys(), columns=["params_"]))
+    rand_f = randf_fit_report_and_serialize(config=config)
+    log.info("Serialize and Report")
+
     return rand_f
 
 
