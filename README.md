@@ -1,4 +1,4 @@
-```
+```yaml
 title: end@_PIMA-App_v1.0
 emoji: 🩺 
 colorFrom: blue
