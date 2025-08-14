@@ -1,0 +1,8 @@
+# @package _global_
+
+objective: binary:logistic
+n_estimators: 200
+subsample: 0.8
+max_depth: 3
+eta: 0.01
+colsample_bytree: 1
