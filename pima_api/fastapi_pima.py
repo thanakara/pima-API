@@ -1,3 +1,5 @@
+import json
+
 import joblib
 from fastapi import FastAPI, HTTPException
 
@@ -13,6 +15,14 @@ model = joblib.load(modeljob_path)
 @api.get("/")
 def home():
     return {"message": "Onset Diabetes Predictions: end@_PIMA-App_v1.0"}
+
+
+@api.get("/classification_report")
+def report():
+    with open(Filepath.REPORTPATH.value, "r") as f_:
+        clf_report = json.load(f_)
+
+    return clf_report
 
 
 @api.post("/check_request")
