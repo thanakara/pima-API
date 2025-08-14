@@ -22,7 +22,7 @@ RUN conda run --name pima-api poetry install
 
 # Train-Job produces a classification report and a serialized model:
 RUN conda run --name pima-api \
-    poetry run python pima_api/model/hydrajob_localmode.py
+    pima_api/model/xgb_job.sh
 
 # Run the FastAPI app using fastapi CLI:
 ENTRYPOINT ["conda", "run", "--name", "pima-api", "poetry", "run"]

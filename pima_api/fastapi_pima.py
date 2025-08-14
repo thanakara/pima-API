@@ -34,7 +34,7 @@ def first_results(request: Request) -> dict:
 
 
 @api.post("/predict_diabetes")
-def invoke_endpoint(request: Request) -> str:
+def invoke_endpoint(request: Request) -> dict:
     pregn = request.Pregnancies
     glucose = request.Glucose
     bl_pre = request.BloodPressure
@@ -48,10 +48,10 @@ def invoke_endpoint(request: Request) -> str:
     prediction = model.predict(features).ravel()
 
     if prediction == Response.NEGATIVE:
-        return "Non-Diabetic"
+        return {"prediction": "Non-Diabetic"}
 
     elif prediction == Response.POSITIVE:
-        return "Diabetic"
+        return {"prediction": "Diabetic"}
 
     else:
         raise HTTPException
