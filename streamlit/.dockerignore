@@ -1,0 +1,7 @@
+.venv
+.vscode
+.dvc
+.dvcignore
+.gitignore
+notebooks/
+pima_api.egg-info/
