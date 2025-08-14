@@ -42,17 +42,17 @@ def fit_report_and_serialize(config: DictConfig) -> RandomForestClassifier:
             "Modelname not in structure. Name given: %s" % config.modelname
         )
 
-    X_train_scaled, y_train, X_test_scaled, y_test = stratify_split_dataset(
+    X_train, y_train, X_test, y_test = stratify_split_dataset(
         datapath=Filepath.DATAPATH.value, train_size=config.train_size, seed=config.seed
     )
 
     # Train-Job
-    model.fit(X_train_scaled, y_train)
+    model.fit(X_train, y_train)
 
     with Path.open(Filepath.MODELJOB.value, "wb") as f_:
         joblib.dump(model, f_, protocol=4)
 
-    y_pred = model.predict(X_test_scaled)
+    y_pred = model.predict(X_test)
     report = classification_report(
         y_test, y_pred, target_names=["Non-Diabetic", "Diabetic"], output_dict=True
     )

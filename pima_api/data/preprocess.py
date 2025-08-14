@@ -34,8 +34,4 @@ def stratify_split_dataset(
     X_test = test_set.drop("Outcome", axis=1)
     y_test = test_set["Outcome"].values
 
-    std_scaler = StandardScaler()
-    X_train_scaled = std_scaler.fit_transform(X_train)
-    X_test_scaled = std_scaler.transform(X_test)
-
-    return X_train_scaled, y_train, X_test_scaled, y_test
+    return X_train, y_train, X_test, y_test
