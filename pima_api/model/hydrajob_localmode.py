@@ -21,9 +21,8 @@ def experiment_run(config: DictConfig) -> None:
     time.sleep(1.5)
     model = fit_report_and_serialize(config)
     logging.info(model.__class__.__name__)
-    time.sleep(1.5)
+    time.sleep(1)
     logging.info("Job ended")
-    time.sleep(0.5)
 
 
 if __name__ == "__main__":

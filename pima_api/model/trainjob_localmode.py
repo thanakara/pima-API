@@ -12,7 +12,6 @@ from pima_api.data.preprocess import stratify_split_dataset
 
 
 def fit_report_and_serialize(config: DictConfig) -> RandomForestClassifier:
-    # Config-based model selection
     if config.modelname == "random_forest":
         model = RandomForestClassifier(
             n_estimators=config.n_estimators,
@@ -46,7 +45,6 @@ def fit_report_and_serialize(config: DictConfig) -> RandomForestClassifier:
         datapath=Filepath.DATAPATH.value, train_size=config.train_size, seed=config.seed
     )
 
-    # Train-Job
     model.fit(X_train, y_train)
 
     with Path.open(Filepath.MODELJOB.value, "wb") as f_:

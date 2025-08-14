@@ -1,7 +1,6 @@
-# Pima Indians Diabetes Database
-
-
-### Models:
-
-- RandomForestClassifier
-- XGBoostClassifier
+title: end@_PIMA-App_v1.0
+emoji: 🩺 
+colorFrom: blue
+colorTo: blue
+sdk: docker
+app_port: 8501

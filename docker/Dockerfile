@@ -11,7 +11,7 @@ RUN conda create -y --name pima-api python=3.10.18 && \
     conda run --name pima-api pip install poetry
 
 # Add the project code using .dockerignore:
-ADD . /pima-API
+COPY . /pima-API
 WORKDIR /pima-API
 
 # Install dependencies from .toml file:
@@ -20,9 +20,12 @@ RUN conda run --name pima-api poetry install
 # Remove pyopenssl dependency for DVC - Google Drive Storage
 # RUN conda run --name pima-api pip uninstall pyopenssl -y
 
-# Train-Job produces a classification report and a serialized model:
+# Train Job produces a classification report and a serialized model
+# Override configuration parameters with Hydra's syntax:
 RUN conda run --name pima-api \
-    pima_api/model/xgb_job.sh
+    poetry run \
+    python pima_api/model/hydrajob_localmode.py \
+    model=xgboost ++seed=2025
 
 # Run the FastAPI app using fastapi CLI:
 ENTRYPOINT ["conda", "run", "--name", "pima-api", "poetry", "run"]
@@ -30,5 +33,4 @@ ENTRYPOINT ["conda", "run", "--name", "pima-api", "poetry", "run"]
 # Declare which port the container will listen on at runtime:
 EXPOSE 80
 
-CMD ["fastapi", "run", "pima_api/fastapi_pima.py", "--host", "0.0.0.0", "--port", "80"]
-
+CMD ["fastapi", "run", "pima_api/fastapi_app.py", "--host", "0.0.0.0", "--port", "80"]
