@@ -1,5 +1,6 @@
 # @package _global_
 
+modelname: random_forest
 n_estimators: 50
 criterion: entropy
 max_depth: 5

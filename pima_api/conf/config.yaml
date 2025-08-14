@@ -1,6 +1,6 @@
 defaults:
   - hydra
-  - model: random_forest
+  - model: xgboost
   - _self_
 
 train_size: 700

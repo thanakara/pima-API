@@ -1,5 +1,6 @@
 # @package _global_
 
+modelname: xgboost
 objective: binary:logistic
 n_estimators: 200
 subsample: 0.8
