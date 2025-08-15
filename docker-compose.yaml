@@ -2,20 +2,22 @@
 
 services:
 
-  fastapi:
+  backend:
     build:
-      dockerfile: fastapi/Dockerfile
+      context: .
+      dockerfile: pima_api/fastapi/Dockerfile
     ports:
-     - 8080:8080
+     - 8080:80
     networks:
      - deploy_network
     container_name: backend
 
-  streamlit:
+  frontend:
     build:
-      dockerfile: streamlit/Dockerfile
+      context: .
+      dockerfile: pima_api/streamlit/Dockerfile
     depends_on:
-     - fastapi
+     - backend
     ports:
      - 8501:8501
     networks:

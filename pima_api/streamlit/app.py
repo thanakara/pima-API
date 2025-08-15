@@ -22,7 +22,7 @@ data = {
 
 if st.button("Predict"):
     try:
-        response = requests.post("http://localhost:8080/predict_diabetes", json=data)
+        response = requests.post("http://backend:80/predict_diabetes", json=data)
         if response.status_code == 200:
             result = response.json()
             prediction = result.get("prediction", None)
