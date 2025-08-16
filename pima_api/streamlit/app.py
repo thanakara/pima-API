@@ -1,6 +1,8 @@
 import requests
 import streamlit as st
 
+server_uri = "http://localhost:80"
+
 st.header("Onset Diabetes Prediction 🩺 ")
 
 st.subheader("Fill the form below")
@@ -25,7 +27,7 @@ data = {
 
 @st.dialog("Classification Report", width="large")
 def report():
-    report = requests.get("http://backend:80/classification_report")
+    report = requests.get(server_uri + "/classification_report")
     json_data = report.json()
     st.dataframe(json_data)
 
@@ -35,7 +37,7 @@ if st.sidebar.button("Model Metrics"):
 
 if st.button("First Results"):
     try:
-        response = requests.post("http://backend:80/check_request", json=data)
+        response = requests.post(server_uri + "/check_request", json=data)
         if response.status_code == 200:
             result = response.json()
             if result is not None:
@@ -50,7 +52,7 @@ if st.button("First Results"):
 
 if st.button("Onset Prediction"):
     try:
-        response = requests.post("http://backend:80/predict_diabetes", json=data)
+        response = requests.post(server_uri + "/predict_diabetes", json=data)
         if response.status_code == 200:
             result = response.json()
             prediction = result.get("prediction", None)
