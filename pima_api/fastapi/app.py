@@ -2,6 +2,7 @@ import json
 
 import joblib
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import JSONResponse
 
 from pima_api.constant import Filepath
 from pima_api.data.template import Request, Response, average_check
@@ -14,7 +15,8 @@ model = joblib.load(modeljob_path)
 
 @api.get("/")
 def home():
-    return {"message": "Onset Diabetes Predictions: end@_PIMA-App_v1.0"}
+    message = {"message": "Onset Diabetes Predictions: end@_PIMA-App_v1.0"}
+    return JSONResponse(message)
 
 
 @api.get("/classification_report")
@@ -27,10 +29,8 @@ def report():
 
 @api.post("/check_request")
 def first_results(request: Request) -> dict:
-    stats = average_check(request=request)
-    req_keys = Request.model_fields.keys()
-
-    return {name: stat for name, stat in zip(req_keys, stats)}
+    results = average_check(request=request)
+    return JSONResponse(results)
 
 
 @api.post("/predict_diabetes")
@@ -48,10 +48,12 @@ def invoke_endpoint(request: Request) -> dict:
     prediction = model.predict(features).ravel()
 
     if prediction == Response.NEGATIVE:
-        return {"prediction": "Non-Diabetic"}
+        non_diabetes = {"prediction": "Non-Diabetic"}
+        return JSONResponse(non_diabetes)
 
     elif prediction == Response.POSITIVE:
-        return {"prediction": "Diabetic"}
+        diabetes = {"prediction": "Diabetic"}
+        return JSONResponse(diabetes)
 
     else:
         raise HTTPException

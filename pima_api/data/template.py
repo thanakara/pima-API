@@ -13,56 +13,35 @@ class Request(BaseModel):
     DiabetesPedigreeFunction: float
     Age: int
 
+    @property
+    def averages(self) -> dict:
+        return {
+            "Pregnancies": 3,
+            "Glucose": 121.65,
+            "BloodPressure": 73.38,
+            "SkinThickness": 29.1,
+            "Insulin": 140.67,
+            "BMI": 32.45,
+            "DiabetesPedigreeFunction": 0.4718,
+            "Age": 32,
+        }
+
 
 class Response(IntEnum):
     NEGATIVE = 0
     POSITIVE = 1
 
 
-def average_check(request: Request) -> list[str]:
-    aavg = "Above Average"
-    bavg = "Below Average"
+def average_check(request: Request) -> dict[str, str]:
+    above = "above_average"
+    below = "below_average / normal"
+    request_model = request.model_dump()
+    results = {}
 
-    if request.Pregnancies > 3:
-        pre = aavg
-    else:
-        pre = bavg
+    for key, value in request_model.items():
+        if value > request.averages.get(key):
+            results.update({key: above})
+        else:
+            results.update({key: below})
 
-    if request.Glucose > 121.65:
-        glu = aavg
-    else:
-        glu = bavg
-
-    if request.BloodPressure > 73.38:
-        bp = aavg
-    else:
-        bp = bavg
-
-    if request.SkinThickness > 29.1:
-        st = aavg
-    else:
-        st = bavg
-
-    if request.Insulin > 140.67:
-        ins = aavg
-    else:
-        ins = bavg
-
-    if request.BMI > 32.45:
-        bmi = aavg
-    else:
-        bmi = bavg
-
-    if request.DiabetesPedigreeFunction > 0.4718:
-        dpf = aavg
-    else:
-        dpf = bavg
-
-    if request.Age > 33:
-        age = aavg
-    else:
-        age = bavg
-
-    stats = [pre, glu, bp, st, ins, bmi, dpf, age]
-
-    return stats
+    return results
